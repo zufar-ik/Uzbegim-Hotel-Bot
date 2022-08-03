@@ -1,0 +1,112 @@
+# English translations for PROJECT.
+# Copyright (C) 2022 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2022-06-07 15:05+0500\n"
+"PO-Revision-Date: 2022-06-07 15:05+0500\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: handlers/users/nomer.py:32
+msgid "Выберите интересующий вас раздел"
+msgstr ""
+
+#: handlers/users/nomer.py:37
+msgid ""
+"Наши контакты:\n"
+"\n"
+"Ресепшен: +998 62 212 34 56\n"
+"\n"
+"Сайт: www.uzbegim-hotel.uz\n"
+"\n"
+"Адрес: A.Баходирхон 182/1\n"
+"\n"
+msgstr ""
+"Our contacts:\n"
+"\n"
+"Reception : +998 62 212 34 56\n"
+"\n"
+"Address: A.Bakhodirkhon 182/1\n"
+"\n"
+
+
+#: handlers/users/nomer.py:49 handlers/users/nomer.py:77
+#: handlers/users/nomer.py:103
+msgid "Назад"
+msgstr ""
+
+#: handlers/users/nomer.py:50
+msgid "Выберите категорию номеров!"
+msgstr "Choose a room category!"
+
+#: handlers/users/nomer.py:63 handlers/users/nomer.py:81
+#: handlers/users/nomer.py:92
+msgid ""
+"<b>Категория</b>: where_cat['name']\n"
+"\n"
+"<b>Номера в категории</b>: where_cat['room_num']\n"
+"\n"
+"<b>Подробнее о номерах</b>: where_cat['about']\n"
+"\n"
+"<b>Цена</b>: where_cat['price'] сум\n"
+"\n"
+msgstr ""
+""
+""
+""
+""
+""
+""
+#: handlers/users/nomer.py:76
+msgid "Забронировать"
+msgstr ""
+
+#: handlers/users/nomer.py:150
+msgid "Выберите раздел который вас интересует"
+msgstr ""
+
+#: handlers/users/start.py:20 handlers/users/start.py:34
+msgid ""
+"Добро пожаловать! name\n"
+"\n"
+"🤖 Я бот который поможет ....\n"
+"\n"
+"🤝 Заказать похожего или совсем иного бота? Свяжитесь с разработчиком <a "
+"href='https://t.me/zufar_ik'>Zufar</a>"
+msgstr ""
+
+#: keyboards/inline/menu.py:7
+msgid "Номера"
+msgstr ""
+
+#: keyboards/inline/menu.py:8
+msgid "Сайт"
+msgstr ""
+
+#: keyboards/inline/menu.py:9
+msgid "Связаться с нами!"
+msgstr ""
+
+#: keyboards/inline/menu.py:17
+msgid "Русский"
+msgstr ""
+
+#: keyboards/inline/menu.py:18
+msgid "English"
+msgstr ""
+
+#: keyboards/inline/menu.py:19
+msgid "Uzbek"
+msgstr ""
+
