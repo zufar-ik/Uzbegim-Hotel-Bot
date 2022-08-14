@@ -267,31 +267,31 @@ async def get_nomer(call: types.CallbackQuery):
                 except MessageToDeleteNotFound:
                     await call.message.delete()
                     now = datetime.datetime.now()
-                    markup = create_calendar(now.year, now.month)
+                    markup = create_calendar(lang['lang'],now.year, now.month)
                     if lang['lang'] == 'ru':
                         await call.message.answer("Пожалуйста, выберите дату прибытия в отель\n\n"
-                                                  f"Сегодня: {now.year}", reply_markup=markup)
+                                                  f"Сегодня: {now.day,now.month,now.year}", reply_markup=markup)
                         await Admin.first.set()
                     elif lang['lang'] == 'en':
                         await call.message.answer("Please, choose the date of arrival at the hotel\n\n"
-                                                  f"Today: {now.year}", reply_markup=markup)
+                                                  f"Today: {now.day,now.month,now.year}", reply_markup=markup)
                         await Admin.first.set()
                     elif lang['lang'] == 'uz':
                         await call.message.answer("Iltimos, mehmonxonaga kelish sanansini tanlang\n\n"
-                                                  f"Bugun: {now.year}", reply_markup=markup)
+                                                  f"Bugun: {now.day,now.month,now.year}", reply_markup=markup)
                         await Admin.first.set()
 
 
 @dp.callback_query_handler(state=Admin.first)
 async def inline11(call: types.CallbackQuery, state: FSMContext):
+    print(call.data)
     now = datetime.datetime.now()
     lang = await db.select_user(tg_id=call.from_user.id)
     a = separate_callback_data(call.data)
     (_, action, year, month, day) = a
     curr = datetime.datetime(int(year), int(month), 1)
-    if action == 'IGNORE':
-        pass
-    elif action == "DAY":
+
+    if action == "DAY":
         ret_data = True, datetime.datetime(int(year), int(month), int(day))
         a = []
         if lang['lang'] == 'ru':
@@ -303,6 +303,9 @@ async def inline11(call: types.CallbackQuery, state: FSMContext):
         elif lang['lang'] == 'uz':
             a = ['', 'yanvar', 'fevral', 'mart', 'aprel', 'may', 'iyun', 'iyul', 'avgust', 'sentyabr', 'oktyabr',
                  "Noyabr dekabr"]
+
+
+
         mon = (ret_data[1].strftime("%m"))
         month = (a[int(mon) % 12])
         day = (ret_data[1].strftime("%d"))
@@ -322,35 +325,40 @@ async def inline11(call: types.CallbackQuery, state: FSMContext):
     elif action == "PREV-MONTH":
         pre = curr - datetime.timedelta(days=1)
         await call.message.edit_text("Пожалуйста, выберите дату прибытия в отель\n\n"
-                                     f"Сегодня: {now.year}",
-                                     reply_markup=create_calendar(int(pre.year), int(pre.month)))
+                                     f"Сегодня: {now.day,now.month,now.year}",
+                                     reply_markup=create_calendar(lang['lang'],int(pre.year), int(pre.month)))
 
     elif action == "NEXT-MONTH":
         ne = curr + datetime.timedelta(days=31)
         await call.message.edit_text("Пожалуйста, выберите дату прибытия в отель\n\n"
-                                     f"Сегодня: {now.year}", reply_markup=create_calendar(int(ne.year), int(ne.month)))
+                                     f"Сегодня: {now.day,now.month,now.year}", reply_markup=create_calendar(lang['lang'],int(ne.year), int(ne.month)))
+
+    elif action == 'IGNORE':
+        pass
+
     else:
-        await call.message.edit_text(text="Что-то пошло не так!", reply_markup=create_calendar(now.year, now.month))
+        await call.message.edit_text(text="Что-то пошло не так!", reply_markup=create_calendar(lang['lang'],now.year, now.month))
         await Send.up.set()
+
+
 
 
 @dp.callback_query_handler(state=Admin.second)
 async def get_leave(call: types.CallbackQuery):
-    await call.message.delete()
     lang = await db.select_user(tg_id=call.from_user.id)
     now = datetime.datetime.now()  # Текущая дата
-    markup = create_calendar(now.year, now.month)
+    markup = create_calendar(lang['lang'],now.year, now.month)
     if lang['lang'] == 'ru':
-        await call.message.answer("Пожалуйста, выберите дату отбытия из отеля\n\n"
-                                  f"Сегодня: {now.year}", reply_markup=markup)
+        await call.message.edit_text("Пожалуйста, выберите дату отбытия из отеля\n\n"
+                                  f"Сегодня: {now.day,now.month,now.year}", reply_markup=markup)
         await Admin.third.set()
     elif lang['lang'] == 'en':
-        await call.message.answer("Please select a leave date from our hotel\n\n"
-                                  f"Today: {now.year}", reply_markup=markup)
+        await call.message.edit_text("Please select a leave date from our hotel\n\n"
+                                  f"Today: {now.day,now.month,now.year}", reply_markup=markup)
         await Admin.third.set()
     elif lang['lang'] == 'uz':
-        await call.message.answer("Iltimos, mehmonxonadan jo‘nash sanasini tanlang\n\n"
-                                  f"Bugun: {now.year}", reply_markup=markup)
+        await call.message.edit_text("Iltimos, mehmonxonadan jo‘nash sanasini tanlang\n\n"
+                                  f"Bugun: {now.day,now.month,now.year}", reply_markup=markup)
         await Admin.third.set()
 
 
@@ -434,28 +442,36 @@ async def get_pay(call: types.CallbackQuery, state: FSMContext):
     elif action == "PREV-MONTH":
         pre = curr - datetime.timedelta(days=1)
         await call.message.answer("Пожалуйста, выберите дату прибытия в отель\n\n"
-                                  f"Сегодня: {now.year}",
-                                  reply_markup=create_calendar(int(pre.year), int(pre.month)))
+                                  f"Сегодня: {now.day,now.month,now.year}",
+                                  reply_markup=create_calendar(lang['lang'],int(pre.year), int(pre.month)))
 
     elif action == "NEXT-MONTH":
         ne = curr + datetime.timedelta(days=31)
         await call.message.answer("Пожалуйста, выберите дату прибытия в отель\n\n"
-                                  f"Сегодня: {now.year}", reply_markup=create_calendar(int(ne.year), int(ne.month)))
+                                  f"Сегодня: {now.day,now.month,now.year}", reply_markup=create_calendar(lang['lang'],int(ne.year), int(ne.month)))
     else:
-        await call.message.edit_text(text="Что-то пошло не так!", reply_markup=create_calendar(now.year, now.month))
+        await call.message.edit_text(text="Что-то пошло не так!", reply_markup=create_calendar(lang['lang'],now.year, now.month))
         await Send.up.set()
 
 
 @dp.callback_query_handler(text=['click', 'yukassa', 'unlimint', 'back6'], state=Payments.peyments)
 async def paymets_ru(call: types.CallbackQuery, state: FSMContext):
+    lang = await db.select_user(tg_id=call.from_user.id)
     data = await state.get_data()
     chek1 = data.get('chekday1')
     chek2 = data.get('chekday2')
     now = datetime.datetime.now()
 
     if chek1 > chek2:
-        await call.message.edit_text('Вы ввели некорректное значение дат',
-                                     reply_markup=create_calendar(now.year, now.month))
+        if lang['lang'] == 'ru':
+            await call.message.edit_text('Вы ввели некорректное значение дат',
+                                     reply_markup=create_calendar(lang['lang'],now.year, now.month))
+        elif lang['lang'] == 'uz':
+            await call.message.edit_text('Yaroqsiz sana qiymatini kiritdingiz',
+                                     reply_markup=create_calendar(lang['lang'],now.year, now.month))
+        elif lang['lang'] == 'en':
+            await call.message.edit_text('You entered an invalid date value',
+                                     reply_markup=create_calendar(lang['lang'],now.year, now.month))
         await Admin.first.set()
     elif chek1 <= chek2:
         day1 = (chek2 - chek1)

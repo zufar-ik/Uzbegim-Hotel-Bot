@@ -8,7 +8,7 @@ def create_callback_data(action, year, month, day):
     """ Create the callback data associated to each button"""
     return 'CALENDAR' + ";" + ";".join([action, str(year), str(month), str(day)])
 
-def create_calendar(year=None,month=None):
+def create_calendar(lang,year=None,month=None):
     """
     Create an inline keyboard with the provided year and month
     :param int year: Year to use in the calendar, if None the current year is used.
@@ -26,9 +26,20 @@ def create_calendar(year=None,month=None):
     keyboard.append(row)
     #Second row - Week Days
     row=[]
-    for day in ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"]:
-        row.append(InlineKeyboardButton(day,callback_data=data_ignore))
-    keyboard.append(row)
+    if lang == 'ru':
+        for day in ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"]:
+            row.append(InlineKeyboardButton(day,callback_data=data_ignore))
+        keyboard.append(row)
+
+    elif lang == 'uz':
+        for day in ["Du","Se","Ch","Pa","Ju","Sh","Ya"]:
+            row.append(InlineKeyboardButton(day,callback_data=data_ignore))
+        keyboard.append(row)
+
+    elif lang == 'en':
+        for day in ["Mo",'Tu','We','Th','Fr','Sa','Su']:
+            row.append(InlineKeyboardButton(day,callback_data=data_ignore))
+        keyboard.append(row)
 
     my_calendar = calendar.monthcalendar(year, month)
     for week in my_calendar:
